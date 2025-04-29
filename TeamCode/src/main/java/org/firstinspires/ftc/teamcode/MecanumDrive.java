@@ -51,6 +51,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.acmerobotics.roadrunner.Pose2d;
+
 @Config
 public final class MecanumDrive {
     public static class Params {
@@ -63,14 +65,14 @@ public final class MecanumDrive {
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
 
         // drive model parameters
-        public double inPerTick = .00198077;
+        public double inPerTick = 0.002269;
         public double lateralInPerTick = inPerTick;
-        public double trackWidthTicks = 7320.3855066464;
+        public double trackWidthTicks = 6390.4803878361;
 
         // feedforward parameters (in tick units)
         public double kS = 0.942803211408938;
         public double kV = 0.0003929127742289856;
-        public double kA = 0.0000012;
+        public double kA = 0.000005;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -82,9 +84,9 @@ public final class MecanumDrive {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 0.0;
-        public double lateralGain = 0.0;
-        public double headingGain = 0.0; // shared with turn
+        public double axialGain = 1.0;
+        public double lateralGain = 6.0;
+        public double headingGain = 3.0; // shared with turn
 
         public double axialVelGain = 0.0;
         public double lateralVelGain = 0.0;
@@ -462,6 +464,18 @@ public final class MecanumDrive {
         
         
         return vel;
+    }
+
+    public void setPoseEstimate(Pose2d pose) {
+        localizer.setPose(pose);
+    }
+
+    /**
+     * @return the current estimated robot pose (field‐relative) as a RoadRunner Pose2d
+     */
+    public Pose2d getPoseEstimate() {
+        // localizer.getPose() returns a Pose2d (your internal RoadRunner struct)
+        return localizer.getPose();
     }
 
     private void drawPoseHistory(Canvas c) {

@@ -14,7 +14,7 @@ public class PinpointDirectionTest extends LinearOpMode {
         telemetry.addLine("Initializing Pinpoint...");
         telemetry.update();
 
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
 
         // ✅ Choose your directions here:
         pinpoint.setEncoderDirections(
